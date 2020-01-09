@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.xinzhi.xsxs.dao.IConsumptionDao">
+    <insert id="InsertYE" parameterType="cn.xinzhi.xsxs.pojo.Balanceconsumptiondetail">
+        insert into balanceconsumptiondetail values(0,#{yemx.bcdPrice},#{yemx.bcdWay},#{yemx.bcdTime},#{yemx.bcdType},#{yemx.bcdXid})
+    </insert>
+    <insert id="InsertXB" parameterType="cn.xinzhi.xsxs.pojo.Xbconsumptiondetail">
+        insert into xbconsumptiondetail values(0,#{xbmx.xcd_price},#{xbmx.xcd_way},#{xbmx.xcd_time},#{xbmx.xcd_type},#{xbmx.xcd_xid})
+    </insert>
+    <select id="selectba" resultType="cn.xinzhi.xsxs.pojo.Balanceconsumptiondetail" resultMap="bcd" parameterType="cn.xinzhi.xsxs.pojo.Balanceconsumptiondetail">
+        select balanceconsumptiondetail.id,balanceconsumptiondetail.bcd_price,balanceconsumptiondetail.bcd_way,balanceconsumptiondetail.bcd_time,balanceconsumptiondetail.bcd_type,balanceconsumptiondetail.bcd_xid,price.id,price.px_price,price.px_xb,price.px_pid,paccount.id,paccount.pa_background,paccount.pa_pid,paccount.pa_certificate,paccount.pa_intro,paccount.pa_tx,paccount.pa_userid,paccount.pa_accountstatus,paccount.pa_devicecode,paccount.pa_openid from balanceconsumptiondetail left join price on balanceconsumptiondetail.bcd_xid = price.id left join paccount on price.px_pid = paccount.id where balanceconsumptiondetail.bcd_type = #{ba.bcdType} and paccount.pa_pid = #{ba.paPid}
+    </select>
+    <select id="selectxb" resultType="cn.xinzhi.xsxs.pojo.Xbconsumptiondetail" resultMap="xcd" parameterType="cn.xinzhi.xsxs.pojo.Xbconsumptiondetail">
+        select price.id,price.px_price,price.px_xb,price.px_pid,paccount.pa_background,paccount.pa_pid,paccount.pa_certificate,paccount.pa_intro,paccount.pa_tx,paccount.pa_userid,paccount.pa_devicecode,paccount.pa_openid,xbconsumptiondetail.xcd_price,xbconsumptiondetail.xcd_way,xbconsumptiondetail.xcd_time,xbconsumptiondetail.xcd_type,xbconsumptiondetail.xcd_xid from price left join paccount on price.px_pid = paccount.id left join xbconsumptiondetail on xbconsumptiondetail.xcd_xid = price.id where xbconsumptiondetail.xcd_type = #{xb.xcdType} and paccount.pa_pid = #{xb.paPid}
+    </select>
+    <resultMap id="bcd" type="cn.xinzhi.xsxs.pojo.Balanceconsumptiondetail" extends="pri">
+        <id property="baid" column="id" />
+        <result property="bcdPrice" column="bcd_price"/>
+        <result property="bcdWay" column="bcd_way"/>
+        <result property="bcdTime" column="bcd_time"/>
+        <result property="bcdType" column="bcd_type"/>
+        <result column="bcd_xid" property="bcdXid"/>
+    </resultMap>
+    <resultMap id="xcd" type="cn.xinzhi.xsxs.pojo.Xbconsumptiondetail" extends="pri">
+        <id property="xbid" column="id"/>
+        <result property="xcdPrice" column="xcdPrice"/>
+        <result property="xcdWay" column="xcd_way"/>
+        <result property="xcdTime" column="xcd_time"/>
+        <result property="xcdType" column="xcd_type"/>
+        <result property="xcdXid" column="xcd_xid"/>
+    </resultMap>
+    <resultMap id="pri" type="cn.xinzhi.xsxs.pojo.Price" extends="pac">
+        <id property="piid" column="id"/>
+        <result property="pxPrice" column="px_price"/>
+        <result property="pxXb" column="px_xb"/>
+        <result property="pxPid" column="px_pid"/>
+    </resultMap>
+    <resultMap id="pac" type="cn.xinzhi.xsxs.pojo.Paccount">
+        <id property="acid" column="id"/>
+        <result property="paBackground" column="pa_background"/>
+        <result property="paPid" column="pa_pid"/>
+        <result property="paCertificate" column="pa_certificate"/>
+        <result property="paIntro" column="pa_intro"/>
+        <result property="paTx" column="pa_tx"/>
+        <result property="paUserid" column="pa_userid"/>
+        <result property="paAccountstatus" column="pa_accountstatus"/>
+        <result property="paDevicecode" column="pa_devicecode"/>
+    </resultMap>
+</mapper>

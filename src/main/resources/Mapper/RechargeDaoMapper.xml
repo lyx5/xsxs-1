@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.xinzhi.xsxs.dao.IRechargeDao">
+    <select id="selectRecharge" resultType="cn.xinzhi.xsxs.pojo.Pricetype" parameterType="int" resultMap="prt">
+        select pricetype.pt_num,pricetype.pt_classify,pricetype.pt_type,pricetype.id from pricetype where pricetype.pt_type = #{type}
+    </select>
+    <resultMap id="prt" type="cn.xinzhi.xsxs.pojo.Pricetype">
+        <id property="id" column="id"/>
+        <result property="ptType" column="pt_type"/>
+        <result property="ptNum" column="pt_num"/>
+        <result property="ptClassify" column="pt_classify"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.xinzhi.xsxs.dao.IRpacketDao">
+    <insert id="insertRP" parameterType="cn.xinzhi.xsxs.pojo.Rpacket">
+        insert into rpacket values(0,#{rp.rpAmount},#{rp.rpNum},#{rp.rpPid},#{rp.rpDistribution},#{rp.rpBless},#{rp.rpStatus},#{rp.rpStatime},#{rp.rpOvertime})
+    </insert>
+    <select id="selectRP" resultType="cn.xinzhi.xsxs.pojo.Rpacket">
+        select rpacket.id,rpacket.rp_amount,rpacket.rp_num,rpacket.rp_pid,rpacket.rp_distribution,rpacket.rp_bless,rpacket.rp_status,rpacket.rp_statime,rpacket.rp_overtime from rpacket order by rpacket.id desc
+    </select>
+</mapper>

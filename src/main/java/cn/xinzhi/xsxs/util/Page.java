@@ -1,4 +1,4 @@
-package cn.xinzhi.xsxs.uilt;
+package cn.xinzhi.xsxs.util;
 
 /**
  * @author youName

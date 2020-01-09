@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.xinzhi.xsxs.dao.IPriceDao">
+    <insert id="insertPrice" parameterType="cn.xinzhi.xsxs.pojo.Price">
+        insert into price values(0,#{iprice.pxPrice},#{iprice.pxXb},#{iprice.pxPid})
+    </insert>
+    <select id="selectPrice" resultType="cn.xinzhi.xsxs.pojo.Price" parameterType="Integer" resultMap="pri">
+        select price.id,price.px_price,price.px_xb,price.px_pid from price where price.px_pid=#{priceid}
+    </select>
+    <select id="selectPaccount" resultType="cn.xinzhi.xsxs.pojo.Paccount" parameterType="String" resultMap="pac">
+        select paccount.id from paccount where paccount.pa_pid=#{apapid}
+    </select>
+    <update id="updatePrice" parameterType="cn.xinzhi.xsxs.pojo.Price">
+        update price
+        <trim prefix="set" suffix="where px_pid=#{uprice.pxPid}" suffixOverrides=",">
+            <if test="uprice.pxPrice != null">
+                px_price=#{uprice.pxPrice}
+            </if>
+            <if test="uprice.pxXb != null">
+                px_xb=#{uprice.pxXb}
+            </if>
+        </trim>
+    </update>
+    <resultMap id="pri" type="cn.xinzhi.xsxs.pojo.Price" extends="pac">
+        <id property="piid" column="id"/>
+        <result property="pxPrice" column="px_price"/>
+        <result property="pxXb" column="px_xb"/>
+        <result property="pxPid" column="px_pid"/>
+    </resultMap>
+    <resultMap id="pac" type="cn.xinzhi.xsxs.pojo.Paccount">
+        <id property="acid" column="id"/>
+        <result property="paBackground" column="pa_background"/>
+        <result property="paPid" column="pa_pid"/>
+        <result property="paCertificate" column="pa_certificate"/>
+        <result property="paIntro" column="pa_intro"/>
+        <result property="paTx" column="pa_tx"/>
+        <result property="paUserid" column="pa_userid"/>
+        <result property="paAccountstatus" column="pa_accountstatus"/>
+        <result property="paDevicecode" column="pa_devicecode"/>
+    </resultMap>
+</mapper>
